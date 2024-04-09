@@ -1,11 +1,27 @@
 {
-  "name": "@elumixor/frontils",
-  "version": "1.0.0",
-  "description": "Utilities for front-end development",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+    "name": "@elumixor/frontils",
+    "version": "1.1.0",
+    "description": "Utilities for front-end development",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "./dist"
+    ],
+    "scripts": {
+        "build": "tsup src --dts",
+        "lint": "eslint src --ext .ts"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "tsup": "^8.0.2",
+        "typescript": "^5.4.4",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-import": "^2.28.1",
+        "eslint-plugin-prefer-arrow": "^1.2.3",
+        "eslint-plugin-prettier": "^5.0.1",
+        "@typescript-eslint/eslint-plugin": "6.18.0",
+        "@typescript-eslint/parser": "6.18.0",
+        "eslint": "^8.56.0"
+    }
 }

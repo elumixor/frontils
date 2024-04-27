@@ -8,3 +8,4 @@ export * from "./not-implemented";
 export * from "./random";
 export * from "./types";
 export * from "./zip";
+export * from "./non-null";

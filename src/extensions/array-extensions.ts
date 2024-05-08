@@ -1,6 +1,6 @@
 import { zip } from "../zip";
 
-export {};
+export const __dummy = {};
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/naming-convention

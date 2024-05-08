@@ -12,7 +12,7 @@
         "./dist"
     ],
     "scripts": {
-        "build": "tsup src --dts",
+        "build": "tsup",
         "lint": "eslint src --ext .ts",
         "release:patch": "npm version patch -m \"Release v%s\" && git push --tags",
         "release:minor": "npm version minor -m \"Release v%s\" && git push --tags",
@@ -21,8 +21,9 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@elumixor/eslint": "^0.1.1",
+        "@types/node": "^20.12.10",
         "tsup": "^8.0.2",
-        "typescript": "^5.4.4",
-        "@elumixor/eslint": "^0.1.1"
+        "typescript": "^5.4.4"
     }
 }

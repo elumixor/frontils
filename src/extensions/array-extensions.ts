@@ -73,6 +73,10 @@ declare global {
          */
         count(element: T): number;
         /**
+         * If the element is present - removes it. Otherwise adds it to the array
+         */
+        toggle(element: T): this;
+        /**
          * Returns a generator of random items without repetition
          */
         get shuffled(): Generator<T>;
@@ -396,6 +400,14 @@ Reflect.defineProperty(Array.prototype, "count", {
         let total = 0;
         for (const arrayElement of this) if (arrayElement === element) total++;
         return total;
+    },
+});
+
+Reflect.defineProperty(Array.prototype, "toggle", {
+    value<T>(this: T[], element: T) {
+        if (this.includes(element)) this.remove(element);
+        else this.push(element);
+        return this;
     },
 });
 

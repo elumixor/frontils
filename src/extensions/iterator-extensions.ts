@@ -25,6 +25,21 @@ Reflect.defineProperty(Object.prototype, "map", {
     writable: true,
 });
 
+Reflect.defineProperty(Object.prototype, "filter", {
+    *value<T, U>(this: Iterator<T>, fn: (value: T, index: number) => boolean): Generator<U> {
+        let index = 0;
+        let { value, done } = this.next() as { value?: T; done: boolean };
+        while (!done) {
+            if (fn(value as T, index++)) yield value as U;
+
+            ({ value, done } = this.next() as { value?: T; done: boolean });
+        }
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+});
+
 Reflect.defineProperty(Object.prototype, "toArray", {
     value<T>(this: Iterator<T>): T[] {
         const result = new Array<T>();

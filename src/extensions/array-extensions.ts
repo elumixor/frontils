@@ -91,20 +91,10 @@ declare global {
          */
         pick(n: number): T[];
         /**
-         * Picks `n` number from array with repetitions
-         * @returns A generator of random items without repetition
-         */
-        pick(n: number, options: { lazy: true }): Generator<T>;
-        /**
          * Picks `n` number from array without repetitions
          * @returns An array of `n` items randomly sampled without repetition
          */
         pick(n: number, options: { repeat: false }): T[];
-        /**
-         * Picks `n` number from array without repetitions
-         * @returns A generator of random items without repetition
-         */
-        pick(n: number, options: { repeat: false; lazy: true }): Generator<T>;
         /**
          * Like {@link map} but returns a generator
          */
@@ -334,7 +324,7 @@ Reflect.defineProperty(Array.prototype, "shuffle", {
 });
 
 Reflect.defineProperty(Array.prototype, "pick", {
-    value<T>(this: T[], n?: number, { repeat = true, lazy = false } = {}) {
+    value<T>(this: T[], n?: number, { repeat = true } = {}) {
         if (n === undefined) return this[Math.floor(Math.random() * this.length)];
 
         if (repeat) {
@@ -342,14 +332,14 @@ Reflect.defineProperty(Array.prototype, "pick", {
                 for (let i = 0; i < n; i++) yield array[Math.floor(Math.random() * array.length)];
             })(this);
 
-            return lazy ? generator : generator.toArray();
+            return [...generator];
         }
 
         if (n > this.length) throw new Error("Cannot pick (without repetition) more numbers then there are in array");
 
-        const generator = this.shuffled.take(n);
+        const generator = [...this.shuffled].take(n);
 
-        return lazy ? generator : generator.toArray();
+        return [...generator];
     },
     configurable: true,
 });

@@ -13,3 +13,4 @@ export * from "./random";
 export * from "./types";
 export * from "./zip";
 export * from "./wraps";
+export * from "./default-map";

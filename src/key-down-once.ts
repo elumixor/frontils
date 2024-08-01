@@ -10,42 +10,45 @@ export const preventKeydownDefault = new (class {
     }
 })();
 
-window.addEventListener("blur", () => {
-    set.clear();
-    setSecond.clear();
-});
+// For window-less environments
+if (typeof window !== "undefined") {
+    window.addEventListener("blur", () => {
+        set.clear();
+        setSecond.clear();
+    });
 
-document.addEventListener(
-    "keydown",
-    (e) => {
-        const { code } = e;
+    document.addEventListener(
+        "keydown",
+        (e) => {
+            const { code } = e;
 
-        if (preventKeydownDefault.check(e)) e.preventDefault();
+            if (preventKeydownDefault.check(e)) e.preventDefault();
 
-        if (set.has(code)) {
-            if (!setSecond.has(code)) {
-                setSecond.add(code);
-                document.dispatchEvent(new KeyboardEvent("keydownsecond", e));
+            if (set.has(code)) {
+                if (!setSecond.has(code)) {
+                    setSecond.add(code);
+                    document.dispatchEvent(new KeyboardEvent("keydownsecond", e));
+                }
+
+                return;
             }
 
-            return;
-        }
+            set.add(code);
 
-        set.add(code);
+            document.dispatchEvent(new KeyboardEvent("keydownonce", e));
+        },
+        false,
+    );
 
-        document.dispatchEvent(new KeyboardEvent("keydownonce", e));
-    },
-    false,
-);
-
-document.addEventListener(
-    "keyup",
-    ({ code }: KeyboardEvent) => {
-        set.delete(code);
-        setSecond.delete(code);
-    },
-    false,
-);
+    document.addEventListener(
+        "keyup",
+        ({ code }: KeyboardEvent) => {
+            set.delete(code);
+            setSecond.delete(code);
+        },
+        false,
+    );
+}
 
 export function isKeyDown(code: string, { secondOnly = false } = {}) {
     return secondOnly ? setSecond.has(code) : set.has(code);

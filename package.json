@@ -1,6 +1,6 @@
 {
     "name": "@elumixor/frontils",
-    "version": "2.4.1",
+    "version": "2.4.2",
     "description": "Utilities for front-end development",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

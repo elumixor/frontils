@@ -3,8 +3,10 @@ import type { Awaitable } from "./types";
 
 export type GetEventData<T extends EventEmitter<unknown>> = T extends EventEmitter<infer U> ? U : never;
 
+export type EventHandler<T> = (eventData: T) => unknown;
+
 export class EventEmitter<TEventData = void> {
-    protected readonly callbacks = new Array<(arg: TEventData) => void | PromiseLike<void>>();
+    protected readonly callbacks = new Array<EventHandler<TEventData>>();
 
     /** Returns a promise that is resolved once the event is emitted. */
     get nextEvent(): PromiseLike<TEventData> {
@@ -12,7 +14,7 @@ export class EventEmitter<TEventData = void> {
     }
 
     /** Subscribes the callback to the event. */
-    subscribe(callback: (eventData: TEventData) => void | PromiseLike<void>): ISubscription<TEventData> {
+    subscribe(callback: EventHandler<TEventData>): ISubscription<TEventData> {
         this.callbacks.push(callback);
 
         return {
@@ -30,12 +32,12 @@ export class EventEmitter<TEventData = void> {
     }
 
     /** Unsubscribes the callback from the event. */
-    unsubscribe(callback: (eventData: TEventData) => void | PromiseLike<void>) {
+    unsubscribe(callback: EventHandler<TEventData>) {
         this.callbacks.remove(callback);
     }
 
     /** Calls `unsubscribe()` immediately after the callback is invoked. */
-    subscribeOnce(callback: (eventData: TEventData) => void | PromiseLike<void>): ISubscription<TEventData> {
+    subscribeOnce(callback: EventHandler<TEventData>): ISubscription<TEventData> {
         const wrappedCallback = (eventData: TEventData) => {
             void callback(eventData);
             this.unsubscribe(wrappedCallback);
@@ -70,7 +72,7 @@ export class AsyncEventEmitter<TEventData = void> {
     }
 
     /** Subscribes the callback to the event. */
-    subscribe(callback: (eventData: TEventData) => Awaitable): ISubscription<TEventData, Awaitable> {
+    subscribe(callback: (eventData: TEventData) => Awaitable): ISubscription<TEventData> {
         this.callbacks.push(callback);
 
         return {
@@ -92,7 +94,7 @@ export class AsyncEventEmitter<TEventData = void> {
     }
 
     /** Calls `unsubscribe()` immediately after the callback is invoked. */
-    subscribeOnce(callback: (eventData: TEventData) => Awaitable): ISubscription<TEventData, Awaitable> {
+    subscribeOnce(callback: (eventData: TEventData) => Awaitable): ISubscription<TEventData> {
         const wrappedCallback = async (eventData: TEventData) => {
             await callback(eventData);
             this.unsubscribe(wrappedCallback);
@@ -116,7 +118,7 @@ export class AsyncEventEmitter<TEventData = void> {
     }
 }
 
-export interface ISubscription<TEventData = void, TResult = void> {
-    callback: (eventData: TEventData) => TResult | PromiseLike<TResult>;
+export interface ISubscription<TEventData = void> {
+    callback: (eventData: TEventData) => unknown;
     unsubscribe(): void;
 }

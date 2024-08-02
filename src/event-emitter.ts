@@ -4,7 +4,7 @@ import type { Awaitable } from "./types";
 export type GetEventData<T extends EventEmitter<unknown>> = T extends EventEmitter<infer U> ? U : never;
 
 export class EventEmitter<TEventData = void> {
-    protected readonly callbacks = new Array<(arg: TEventData) => void>();
+    protected readonly callbacks = new Array<(arg: TEventData) => void | PromiseLike<void>>();
 
     /** Returns a promise that is resolved once the event is emitted. */
     get nextEvent(): PromiseLike<TEventData> {
@@ -12,7 +12,7 @@ export class EventEmitter<TEventData = void> {
     }
 
     /** Subscribes the callback to the event. */
-    subscribe(callback: (eventData: TEventData) => void): ISubscription<TEventData> {
+    subscribe(callback: (eventData: TEventData) => void | PromiseLike<void>): ISubscription<TEventData> {
         this.callbacks.push(callback);
 
         return {
@@ -26,18 +26,18 @@ export class EventEmitter<TEventData = void> {
         // Some subscribers may want to unsubscribe after the event
         // This leads to modification of `this.callbacks`
         // To avoid problems, we should iterate on the copy
-        for (const callback of [...this.callbacks]) callback(eventData);
+        for (const callback of [...this.callbacks]) void callback(eventData);
     }
 
     /** Unsubscribes the callback from the event. */
-    unsubscribe(callback: (eventData: TEventData) => void) {
+    unsubscribe(callback: (eventData: TEventData) => void | PromiseLike<void>) {
         this.callbacks.remove(callback);
     }
 
     /** Calls `unsubscribe()` immediately after the callback is invoked. */
-    subscribeOnce(callback: (eventData: TEventData) => void): ISubscription<TEventData> {
+    subscribeOnce(callback: (eventData: TEventData) => void | PromiseLike<void>): ISubscription<TEventData> {
         const wrappedCallback = (eventData: TEventData) => {
-            callback(eventData);
+            void callback(eventData);
             this.unsubscribe(wrappedCallback);
         };
 
@@ -117,6 +117,6 @@ export class AsyncEventEmitter<TEventData = void> {
 }
 
 export interface ISubscription<TEventData = void, TResult = void> {
-    callback: (eventData: TEventData) => TResult;
+    callback: (eventData: TEventData) => TResult | PromiseLike<TResult>;
     unsubscribe(): void;
 }

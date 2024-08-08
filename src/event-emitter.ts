@@ -31,6 +31,8 @@ export class EventEmitter<TEventData = void> {
 
     /** Emits the event. */
     emit(eventData: TEventData) {
+        this._value = eventData;
+
         // Some subscribers may want to unsubscribe after the event
         // This leads to modification of `this.callbacks`
         // To avoid problems, we should iterate on the copy

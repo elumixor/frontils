@@ -15,3 +15,4 @@ export * from "./random";
 export * from "./types";
 export * from "./wraps";
 export * from "./zip";
+export * from "./assert";

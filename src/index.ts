@@ -5,7 +5,6 @@ export * from "./colors";
 export * from "./default-map";
 export * from "./delay";
 export * from "./event-emitter";
-export * from "./file-data";
 export * from "./get-element-or-throw";
 export * from "./is-mobile";
 export * from "./key-down-once";

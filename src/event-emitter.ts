@@ -7,10 +7,16 @@ export type EventHandler<T> = (eventData: T) => unknown;
 
 export class EventEmitter<TEventData = void> {
     protected readonly callbacks = new Array<EventHandler<TEventData>>();
+    private _value?: TEventData;
+    readonly first = this.nextEvent.then((value) => (this._value = value));
 
     /** Returns a promise that is resolved once the event is emitted. */
     get nextEvent(): PromiseLike<TEventData> {
         return new Promise((resolve) => this.subscribeOnce(resolve));
+    }
+
+    get value() {
+        return this._value;
     }
 
     /** Subscribes the callback to the event. */
@@ -85,7 +91,7 @@ export class AsyncEventEmitter<TEventData = void> {
     async emit(eventData: TEventData) {
         const callbacks = [...this.callbacks];
         if (this.strategy === "sequential") for (const callback of callbacks) await callback(eventData);
-        else await all(callbacks.map((callback) => callback(eventData)));
+        else await all(...callbacks.map((callback) => callback(eventData)));
     }
 
     /** Unsubscribes the callback from the event. */

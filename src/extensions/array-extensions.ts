@@ -105,6 +105,10 @@ declare global {
          * By default compares using `===`, optionally takes a comparator function.
          */
         unique(comparator?: (a: T, b: T) => boolean): T[];
+        /** Returns the index of the largest element */
+        get argmax(): number;
+        /** Returns the index of the smallest element */
+        get argmin(): number;
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars
@@ -404,6 +408,48 @@ Reflect.defineProperty(Array.prototype, "toggle", {
 Reflect.defineProperty(Array.prototype, "clear", {
     value(this: unknown[]) {
         this.splice(0, this.length);
+    },
+    configurable: true,
+});
+
+Reflect.defineProperty(Array.prototype, "argmax", {
+    get<T>(this: T[]) {
+        let maxIndex = -1;
+        let maxValue = -Infinity;
+        let index = 0;
+        for (const element of this.entries()) {
+            if (typeof element !== "number") throw new Error("Argmax cannot work on non-number arrays!");
+
+            if (element > maxValue) {
+                maxValue = element;
+                maxIndex = index;
+            }
+
+            index++;
+        }
+
+        return maxIndex;
+    },
+    configurable: true,
+});
+
+Reflect.defineProperty(Array.prototype, "argmin", {
+    get<T>(this: T[]) {
+        let minIndex = -1;
+        let minValue = Infinity;
+        let index = 0;
+        for (const element of this.entries()) {
+            if (typeof element !== "number") throw new Error("Argmin cannot work on non-number arrays!");
+
+            if (element < minValue) {
+                minValue = element;
+                minIndex = index;
+            }
+
+            index++;
+        }
+
+        return minIndex;
     },
     configurable: true,
 });

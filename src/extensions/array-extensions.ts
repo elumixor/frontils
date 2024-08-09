@@ -417,7 +417,7 @@ Reflect.defineProperty(Array.prototype, "argmax", {
         let maxIndex = -1;
         let maxValue = -Infinity;
         let index = 0;
-        for (const element of this.entries()) {
+        for (const element of this) {
             if (typeof element !== "number") throw new Error("Argmax cannot work on non-number arrays!");
 
             if (element > maxValue) {
@@ -438,7 +438,7 @@ Reflect.defineProperty(Array.prototype, "argmin", {
         let minIndex = -1;
         let minValue = Infinity;
         let index = 0;
-        for (const element of this.entries()) {
+        for (const element of this) {
             if (typeof element !== "number") throw new Error("Argmin cannot work on non-number arrays!");
 
             if (element < minValue) {

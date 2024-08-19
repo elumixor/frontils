@@ -105,6 +105,10 @@ declare global {
          * By default compares using `===`, optionally takes a comparator function.
          */
         unique(comparator?: (a: T, b: T) => boolean): T[];
+        /** Returns the largest element */
+        get max(): number;
+        /** Returns the smallest element */
+        get min(): number;
         /** Returns the index of the largest element */
         get argmax(): number;
         /** Returns the index of the smallest element */
@@ -408,6 +412,28 @@ Reflect.defineProperty(Array.prototype, "toggle", {
 Reflect.defineProperty(Array.prototype, "clear", {
     value(this: unknown[]) {
         this.splice(0, this.length);
+    },
+    configurable: true,
+});
+
+Reflect.defineProperty(Array.prototype, "max", {
+    get(this: number[]) {
+        if (this.length === 0) throw new Error("Cannot find max of an empty array");
+
+        if (typeof this[0] !== "number") throw new Error("Max cannot work on non-number arrays!");
+
+        return Math.max(...this);
+    },
+    configurable: true,
+});
+
+Reflect.defineProperty(Array.prototype, "min", {
+    get(this: number[]) {
+        if (this.length === 0) throw new Error("Cannot find min of an empty array");
+
+        if (typeof this[0] !== "number") throw new Error("Min cannot work on non-number arrays!");
+
+        return Math.min(...this);
     },
     configurable: true,
 });

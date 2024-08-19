@@ -105,6 +105,14 @@ declare global {
          * By default compares using `===`, optionally takes a comparator function.
          */
         unique(comparator?: (a: T, b: T) => boolean): T[];
+        /** Returns the largest element */
+        get max(): number;
+        /** Returns the smallest element */
+        get min(): number;
+        /** Returns the index of the largest element */
+        get argmax(): number;
+        /** Returns the index of the smallest element */
+        get argmin(): number;
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars
@@ -137,14 +145,6 @@ declare global {
          * Clears the array
          */
         clear(): void;
-        /** Returns the largest element */
-        get max(): number;
-        /** Returns the smallest element */
-        get min(): number;
-        /** Returns the index of the largest element */
-        get argmax(): number;
-        /** Returns the index of the smallest element */
-        get argmin(): number;
     }
 }
 

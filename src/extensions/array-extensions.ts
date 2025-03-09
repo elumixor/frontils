@@ -105,6 +105,12 @@ declare global {
          * By default compares using `===`, optionally takes a comparator function.
          */
         unique(comparator?: (a: T, b: T) => boolean): T[];
+        /**
+         * Splits array in two based on condition.
+         * First part is an array of elements that satisfy the condition,
+         * second part is an array of elements that don't.
+         */
+        binarySplit(separator: (a: T) => boolean): [T, T][];
         /** Returns the largest element */
         get max(): number;
         /** Returns the smallest element */
@@ -371,6 +377,20 @@ Reflect.defineProperty(Array.prototype, "unique", {
                 result.push(current);
 
         return result;
+    },
+});
+
+Reflect.defineProperty(Array.prototype, "binarySplit", {
+    value<T>(this: T[], predicate: (element: T) => boolean) {
+        const left: T[] = [];
+        const right: T[] = [];
+
+        for (const element of this) {
+            if (predicate(element)) left.push(element);
+            else right.push(element);
+        }
+
+        return [left, right];
     },
 });
 

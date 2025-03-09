@@ -1,7 +1,6 @@
 export const __dummy = {};
 
 declare global {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Set<T> {
         /**
          * Returns a first element of an array

@@ -110,7 +110,7 @@ declare global {
          * First part is an array of elements that satisfy the condition,
          * second part is an array of elements that don't.
          */
-        binarySplit(separator: (a: T) => boolean): [T, T][];
+        binarySplit(separator: (a: T) => boolean): [T[], T[]];
         /** Returns the largest element */
         get max(): number;
         /** Returns the smallest element */

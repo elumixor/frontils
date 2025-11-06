@@ -14,9 +14,9 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "test": "bun test",
-    "release:patch": "npm version patch -m \"Release v%s\" && bun run format && && git add && git commit --amend --no-edit && git push --tags",
-    "release:minor": "npm version minor -m \"Release v%s\" && bun run format && && git add && git commit --amend --no-edit && git push --tags",
-    "release:major": "npm version major -m \"Release v%s\" && bun run format && && git add && git commit --amend --no-edit && git push --tags"
+    "release:patch": "npm version patch -m \"Release v%s\" && bun run format && git add . && git commit --amend --no-edit && git push --tags",
+    "release:minor": "npm version minor -m \"Release v%s\" && bun run format && git add . && git commit --amend --no-edit && git push --tags",
+    "release:major": "npm version major -m \"Release v%s\" && bun run format && git add . && git commit --amend --no-edit && git push --tags"
   },
   "author": "",
   "license": "ISC",

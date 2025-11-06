@@ -7,9 +7,9 @@ export const Color = {
     return this.rgb(r, g, b);
   },
   hslToRgb(h: number, s: number, l: number) {
-    let r;
-    let g;
-    let b;
+    let r: number;
+    let g: number;
+    let b: number;
 
     if (s === 0) {
       // If saturation is 0, the color is a shade of gray

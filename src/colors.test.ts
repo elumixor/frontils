@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { Color, blue, colored, cyan, green, magenta, red, strike, white, yellow } from "./colors";
+import { blue, Color, colored, cyan, green, magenta, red, strike, white, yellow } from "./colors";
 
 describe("Color.rgb", () => {
   test("should generate ANSI RGB color code", () => {

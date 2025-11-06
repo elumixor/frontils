@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: We need "any" here */
 export type ArrayElement<T> = T extends (infer U)[] ? U : never;
 
 export type Awaitable<T = void, P extends PromiseLike<T> = PromiseLike<T>> = T | P;
@@ -8,7 +9,6 @@ export type Unpromisify<T> = T extends PromiseLike<infer U>
     ? (...args: R) => U
     : never;
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type AnyConstructor<T extends object = object, TArgs extends any[] = any[]> =
   | AbstractConstructor<T, TArgs>
   | Constructor<T, TArgs>;
@@ -19,7 +19,6 @@ export type AbstractConstructor<T extends object = object, TArgs extends any[] =
   ...params: TArgs
 ) => T;
 
-/* eslint-enable @typescript-eslint/no-explicit-any */
 export type JSONPrimitive = string | number | boolean | null;
 export type JSONLike = JSONPrimitive | { [key: string]: JSONLike } | JSONLike[];
 

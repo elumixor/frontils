@@ -8,9 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/elumixor/frontils.git"
   },
-  "files": [
-    "./dist"
-  ],
+  "files": ["./dist"],
   "scripts": {
     "build": "bun run build:bundle && bun run build:declaration",
     "build:bundle": "bun build ./src/index.ts --outdir ./dist",

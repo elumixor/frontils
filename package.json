@@ -1,6 +1,6 @@
 {
   "name": "@elumixor/frontils",
-  "version": "2.14.1",
+  "version": "3.0.0",
   "description": "Utilities for front-end development",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/elumixor/frontils.git"
   },
-  "files": ["./dist"],
+  "files": [
+    "./dist"
+  ],
   "scripts": {
     "build": "bun run build:bundle && bun run build:declaration",
     "build:bundle": "bun build ./src/index.ts --outdir ./dist",

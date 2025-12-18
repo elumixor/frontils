@@ -1,23 +1,25 @@
+const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
 /** Generates a random number in [0, 1) range */
-export function random(): number;
+function random(): number;
 /** Generates a random number in [0, max) range. Returns an integer.  */
-export function random(max: number): number;
+function random(max: number): number;
 /** Generates a random number in [min, max) range. Returns an integer.  */
-export function random(min: number, max: number): number;
-export function random(from?: number, to?: number) {
+function random(min: number, max: number): number;
+function random(from?: number, to?: number) {
   if (from === undefined) return Math.random();
   if (to === undefined) {
     to = from;
     from = 0;
   }
-  return Math.floor(randomFloat(from, to));
+  return Math.floor(random.float(from, to));
 }
 
 /** Generates a random floating point number in [0, max) range. */
-export function randomFloat(max: number): number;
+function float(max: number): number;
 /** Generates a random floating point number in [min, max) range. */
-export function randomFloat(min: number, max: number): number;
-export function randomFloat(from: number, to?: number) {
+function float(min: number, max: number): number;
+function float(from: number, to?: number) {
   if (to === undefined) {
     to = from;
     from = 0;
@@ -26,13 +28,17 @@ export function randomFloat(from: number, to?: number) {
 }
 
 /** Generates a random string of given length. */
-export function randomString(length = 10, _alphabet = alphabet) {
-  return Array.from({ length }, () => randomChar(_alphabet)).join("");
+function string(length = 10, _alphabet = alphabet) {
+  return Array.from({ length }, () => random.char(_alphabet)).join("");
 }
 
 /** Generates a random character */
-export function randomChar(_alphabet = alphabet) {
-  return alphabet[random(_alphabet.length)];
+function char(_alphabet = alphabet) {
+  return _alphabet[random(_alphabet.length)];
 }
 
-const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+random.float = float;
+random.string = string;
+random.char = char;
+
+export { random };

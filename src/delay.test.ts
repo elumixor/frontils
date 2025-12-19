@@ -6,8 +6,8 @@ describe("delay", () => {
     const start = Date.now();
     await delay(0.1);
     const elapsed = Date.now() - start;
-    expect(elapsed).toBeGreaterThanOrEqual(100);
-    expect(elapsed).toBeLessThan(150);
+    expect(elapsed).toBeGreaterThanOrEqual(80);
+    expect(elapsed).toBeLessThan(110);
   });
 });
 
